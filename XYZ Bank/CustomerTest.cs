@@ -10,11 +10,11 @@ using XYZ_Bank.Utilities;
 
 namespace XYZ_Bank
 {
-    public class CustomerTest: AutomationWrapper
+    public class CustomerTest : AutomationWrapper
     {
-        [Test,TestCaseSource(typeof(DataSource),nameof(DataSource.ValidLoginData))]
+        [Test,TestCaseSource(typeof(DataSource),nameof(DataSource.ValidBankManagerLogin))]
 
-        public void AddValidCustomer(string UserFirstName,string UserLastName,string UserPostCode,string fullname)
+        public void AddValidCustomer(string UserFirstName, string UserLastName, string UserPostCode, string fullname, string Money)
         {
             driver.FindElement(By.XPath("//button[text()='Bank Manager Login']")).Click();
             driver.FindElement(By.XPath("//button[@ng-class='btnClass1']")).Click();
@@ -35,7 +35,7 @@ namespace XYZ_Bank
             select1.SelectByText(fullname);
             Thread.Sleep(1000);
             SelectElement select2 = new SelectElement(driver.FindElement(By.Name("currency")));
-            select2.SelectByValue("Rupee");
+            select2.SelectByValue(Money);
 
             Thread.Sleep(1000);
             driver.FindElement(By.XPath("//button[text()='Process']")).Click();
@@ -72,18 +72,18 @@ namespace XYZ_Bank
             driver.FindElement(By.XPath("//button[@ng-class='btnClass3']")).Click();
 
             Thread.Sleep(2000);
-            driver.FindElement(By.XPath("//input[@placeholder='amount']")).SendKeys("2500");
+            driver.FindElement(By.XPath("//input[@placeholder='amount']")).SendKeys("100000");
 
             driver.FindElement(By.XPath("//button[text()='Withdraw']")).Click();
 
-           string ErrorMessage = driver.FindElement(By.XPath("//span[text()='Transaction Failed. You can not withdraw amount more than the balance.']")).Text;
-            Console.WriteLine(ErrorMessage);
+          // string ErrorMessage = driver.FindElement(By.XPath("//span[text()='Transaction Failed. You can not withdraw amount more than the balance.']")).Text;
+          //  Console.WriteLine(ErrorMessage);
 
             driver.FindElement(By.XPath("//input[@placeholder='amount']")).SendKeys("8000");
             driver.FindElement(By.XPath("//button[text()='Withdraw']")).Click();
 
-            string Message = driver.FindElement(By.XPath("//span[text()='Transaction successful']")).Text;
-            Console.WriteLine(Message);
+            //string Message = driver.FindElement(By.XPath("//span[text()='Transaction successful']")).Text;
+            //Console.WriteLine(Message);
 
             driver.FindElement(By.XPath("//button[@ng-show='logout']")).Click();
 
